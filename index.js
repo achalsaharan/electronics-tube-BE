@@ -40,6 +40,7 @@ app.use(routeNotFoundHandler);
 // Error handler
 app.use(allErrorsHandler);
 
-app.listen(process.env.PORT || 3998, () => {
-    console.log(`Example app listening on port http://localhost:${3998}`);
+const PORT = process.env.PORT || 3998;
+app.listen(PORT, () => {
+    console.log(`Example app listening on port http://localhost:${PORT}`);
 });

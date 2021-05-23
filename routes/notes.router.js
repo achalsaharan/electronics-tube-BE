@@ -16,7 +16,6 @@ router.get('/users/:userId/:videoId', async (req, res) => {
         console.log(userId, videoId);
 
         const notes = await Note.find({ user: userId, video: videoId });
-        console.log(notes);
         res.json({ success: true, notes: notes });
     } catch (error) {
         console.log(error);

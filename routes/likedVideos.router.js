@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 router.param('userId', async (req, res, next, userId) => {
     try {
         const user = await User.findById(userId);
-        // console.log(user);
+
         if (user === null) {
             res.json({ success: false, error: 'incorrect userId' });
         } else {

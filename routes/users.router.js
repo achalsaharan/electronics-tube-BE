@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
         res.json({ success: true, user: user });
     } catch (error) {
         console.log('error creating/updating user', error);
-        res.json({ success: false, message: 'unable to create/update user' });
+        res.json({ success: false, message: error.message });
     }
 });
 

@@ -7,7 +7,7 @@ async function initializeDBConnection() {
             useNewUrlParser: true,
         });
 
-        console.log('succefully connected');
+        console.log('successfully connected');
     } catch (error) {
         console.log('mongose connection failed.....', error);
     }
