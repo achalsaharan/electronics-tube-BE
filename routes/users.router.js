@@ -1,6 +1,8 @@
 const express = require('express');
-const { PlayList } = require('../models/playList.model');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+
+const { PlayList } = require('../models/playList.model');
 const { User } = require('../models/user.model');
 
 router.get('/', (req, res) => {
@@ -12,6 +14,13 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newUser = req.body;
+
+        //hashing the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newUser.password, salt);
+        console.log(hashedPassword);
+
+        newUser.password = hashedPassword;
 
         const user = new User(newUser);
         await user.save();

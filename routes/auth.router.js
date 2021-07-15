@@ -1,5 +1,9 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const router = express.Router();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const { User } = require('../models/user.model');
 
@@ -12,7 +16,13 @@ router.post('/login', async (req, res) => {
             res.json({ success: false, message: 'email or password invalid' });
         }
 
-        if (password === user.password) {
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (isPasswordValid) {
+            const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+                expiresIn: '24h',
+            });
+
             user.__v = undefined;
             user.createdAt = undefined;
             user.updatedAt = undefined;
@@ -20,7 +30,7 @@ router.post('/login', async (req, res) => {
             res.json({
                 success: true,
                 user: user,
-                TOKEN: 'A_VERY_SECRET_TOKEN',
+                token: `Bearer ${token}`,
             });
         } else {
             res.json({ success: false, message: 'email or password invalid' });

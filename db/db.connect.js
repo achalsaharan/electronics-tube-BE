@@ -7,7 +7,7 @@ async function initializeDBConnection() {
             useNewUrlParser: true,
         });
 
-        console.log('successfully connected');
+        console.log('successfully connected to the remote DB');
     } catch (error) {
         console.log('mongose connection failed.....', error);
     }

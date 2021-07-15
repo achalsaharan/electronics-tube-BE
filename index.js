@@ -6,6 +6,7 @@ const cors = require('cors');
 const { initializeDBConnection } = require('./db/db.connect.js');
 const routeNotFoundHandler = require('./middlewares/routeNotFoundHandler');
 const allErrorsHandler = require('./middlewares/allErrorsHandler');
+const authenticationVerifier = require('./middlewares/authenticationVerifier');
 
 //xx router handlers
 const auth = require('./routes/auth.router');
@@ -30,9 +31,9 @@ app.get('/', (req, res) => {
 app.use('/auth', auth);
 app.use('/users', users);
 app.use('/videos', videos);
-app.use('/likedvideos', likedVideos);
-app.use('/playlists', playLists);
-app.use('/notes', notes);
+app.use('/likedvideos', authenticationVerifier, likedVideos);
+app.use('/playlists', authenticationVerifier, playLists);
+app.use('/notes', authenticationVerifier, notes);
 
 // 404 route handler
 app.use(routeNotFoundHandler);

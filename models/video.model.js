@@ -23,17 +23,7 @@ const VideoSchema = new mongoose.Schema(
             type: Number,
         },
 
-        date: {
-            type: Date,
-        },
-
-        ratings: {
-            type: Number,
-        },
-
-        level: {
-            type: String,
-        },
+        categories: [String],
     },
     {
         timestamps: true,

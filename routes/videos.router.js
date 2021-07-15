@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Video } = require('../models/video.model');
+const { videos } = require('../videosDB');
 
 router.get('/', async (req, res) => {
     try {
@@ -23,6 +24,24 @@ router.post('/', async (req, res) => {
         console.log(error);
         res.json({ success: false, error: error.message });
     }
+});
+
+router.post('/addVideos', async (req, res) => {
+    for (let i = 0; i < videos.length; i++) {
+        const video = videos[i];
+
+        try {
+            newVideo = await new Video(video);
+            await newVideo.save();
+        } catch (error) {
+            console.log(error);
+            res.json({ error: 'error occoured' });
+        }
+    }
+
+    const savedVideos = await Video.find({});
+
+    res.json({ savedVideos });
 });
 
 router.get('/:videoId', async (req, res) => {
